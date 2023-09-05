@@ -1,8 +1,15 @@
-import sqlite3
+# dog.py
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
-CONN = sqlite3.connect('lib/dogs.db')
-CURSOR = CONN.cursor()
+Base = declarative_base()
 
-class Dog:
-    
-    pass
+class Dog(Base):
+    __tablename__ = 'dogs'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    breed = Column(String)
+
+engine = create_engine('sqlite:///dogs.db')
+Session = sessionmaker(bind=engine)
