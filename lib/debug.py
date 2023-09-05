@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 
-from dog import Dog, CONN, CURSOR
+# debug.py
+from dog import Dog, Session, Base
 
-sql = """
-    DROP TABLE IF EXISTS dogs
-"""
+# Create the database tables
+Base.metadata.create_all()
 
-CURSOR.execute(sql)
+# Create a session
+session = Session()
 
-Dog.create_table()
-joey = Dog("joey", "cocker spaniel")
-joey.save()
-fanny = Dog("fanny", "cockapoo")
-fanny.save()
-
-import ipdb; ipdb.set_trace()
+# Add sample dog records
+dog1 = Dog(name='Buddy', breed='Golden Retriever')
+dog2 = Dog(name='Max', breed='Labrador Retriever')
+session.add(dog1)
+session.add(dog2)
+session.commit()
